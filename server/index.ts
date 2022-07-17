@@ -5,12 +5,10 @@
 import cluster from 'cluster';
 import net from 'net';
 import { app } from './app';
-import serverStore from './server-store';
-import { socketMain } from './socket-main';
 import { registerSocketServer } from './socket-server';
 import { netServer } from './net-server';
 import { spawnWorkers } from './utils/spawnWorkers';
-import { connectRedis } from './utils/connectRedis';
+import { connectRedisAdapter } from './utils/connectRedisAdapter';
 
 const PORT = 8181;
 
@@ -25,13 +23,7 @@ if (cluster.isPrimary) {
 
   registerSocketServer(expressServer);
 
-  connectRedis();
-
-  const io = serverStore.getSocketServerInstance();
-
-  io.on('connection', (socket) => {
-    socketMain(io, socket);
-  });
+  connectRedisAdapter();
 
   process.on('message', (message: string, connection: net.Socket) => {
     if (message !== 'sticky-session:connection') {
