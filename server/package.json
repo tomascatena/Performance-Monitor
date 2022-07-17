@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/redis": "^4.0.11",
-    "@types/socket.io": "^3.0.2"
+    "@types/socket.io": "^3.0.2",
+    "nodemon": "^2.0.19"
   }
 }
