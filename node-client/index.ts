@@ -11,6 +11,13 @@
 
 import os from 'os';
 import util from 'util';
+import { io } from 'socket.io-client';
+
+const socket = io('http://127.0.0.1:8181');
+
+socket.on('connect', () => {
+  console.log('Connected to socket.io server');
+});
 
 // CPU average
 // Get milliseconds in each mode

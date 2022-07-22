@@ -8,8 +8,12 @@ export const connectRedisAdapter = () => {
 
   const io = serverStore.getSocketServerInstance();
 
-  Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
-    io.adapter(createAdapter(pubClient, subClient));
-    io.listen(3000);
-  });
+  Promise.all([pubClient.connect(), subClient.connect()])
+    .then(() => {
+      io.adapter(createAdapter(pubClient, subClient));
+      io.listen(3000);
+    })
+    .catch((error) => {
+      console.log('Error connecting to Redis', error);
+    });
 };
