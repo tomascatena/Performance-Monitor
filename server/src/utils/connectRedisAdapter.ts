@@ -11,7 +11,7 @@ export const connectRedisAdapter = () => {
   Promise.all([pubClient.connect(), subClient.connect()])
     .then(() => {
       io.adapter(createAdapter(pubClient, subClient));
-      io.listen(3000);
+      io.listen(7171);
     })
     .catch((error) => {
       console.log('Error connecting to Redis', error);

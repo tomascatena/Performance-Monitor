@@ -7,18 +7,25 @@ import serverStore from '@/server-store/server-store';
 import util from 'util';
 
 export const registerSocketServer = (server: http.Server) => {
-  const io = new SocketIOServer(server);
+  const io = new SocketIOServer(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
+    },
+  });
 
   serverStore.setSocketServerInstance(io);
 
   io.on('connection', (socket) => {
+    console.log('Socket id', socket.id);
     console.log(`Connected to worker ${cluster?.worker?.id}`);
 
     socket.on('client-auth', (key) => {
-      if (key === 'pelusa') {
+      console.log(`Client auth key: ${key}`);
+      if (key === 'client-key') {
         console.log('Valid client joined');
         socket.join('clients');
-      } else if (key === 'pelusa2') {
+      } else if (key === 'ui-client-key') {
         console.log('Valid UI client has joined');
         socket.join('ui');
       } else {
@@ -39,7 +46,9 @@ export const registerSocketServer = (server: http.Server) => {
     });
 
     socket.on('performance-data', (data: PerformanceData) => {
-      // console.log('Received performance data', data);
+      console.log(`Received performance data from ${data.macAddress}`);
+
+      io.to('ui').emit('performance-data', data);
     });
   });
 };

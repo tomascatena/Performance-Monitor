@@ -19,7 +19,7 @@ socket.on('connect', () => {
   console.log('Connected to socket.io server');
 
   // Client auth with single key value
-  socket.emit('client-auth', 'pelusa');
+  socket.emit('client-auth', 'client-key');
 
   getPerformanceData().then((perfData) => {
     // console.log(perfData);
