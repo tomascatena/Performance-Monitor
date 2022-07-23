@@ -9,7 +9,6 @@ import { registerSocketServer } from '@/socket-server/socket-server';
 import { netServer } from '@/net-server/net-server';
 import { spawnWorkers } from '@/utils/spawnWorkers';
 import { connectRedisAdapter } from '@/utils/connectRedisAdapter';
-import { connectDB } from '@/utils/connectDB';
 
 const PORT = 8181;
 
@@ -17,8 +16,6 @@ if (cluster.isPrimary) {
   spawnWorkers();
 
   netServer.listen(PORT);
-
-  connectDB();
 
   console.log(`Master listening on port ${PORT}`);
 } else {

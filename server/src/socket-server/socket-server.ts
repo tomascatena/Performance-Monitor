@@ -3,8 +3,11 @@ import http from 'http';
 import serverStore from '@/server-store/server-store';
 import { socketMain } from './socket-handlers';
 import cluster from 'cluster';
+import { connectDB } from '@/utils/connectDB';
 
 export const registerSocketServer = (server: http.Server) => {
+  connectDB();
+
   const io = new SocketIOServer(server);
 
   serverStore.setSocketServerInstance(io);
