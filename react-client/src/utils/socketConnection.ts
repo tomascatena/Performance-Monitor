@@ -1,7 +1,7 @@
-import { Socket, io } from 'socket.io-client';
-import { store } from '../app/store';
 import { PerformanceData } from '../typings/typings';
+import { Socket, io } from 'socket.io-client';
 import { performanceDataActions } from '../features/performanceData/performanceDataSlice';
+import { store } from '../app/store';
 
 let socket: Socket;
 

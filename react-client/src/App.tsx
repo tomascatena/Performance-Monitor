@@ -1,6 +1,6 @@
-import React from 'react';
-import { useAppSelector } from './app/hooks';
 import { connectWithSocketServer } from './utils/socketConnection';
+import { useAppSelector } from './app/hooks';
+import React from 'react';
 
 const App = () => {
   React.useEffect(() => {
