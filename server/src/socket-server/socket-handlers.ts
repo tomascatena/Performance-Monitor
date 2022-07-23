@@ -1,4 +1,5 @@
 import { Server, Socket } from 'socket.io';
+import serverStore from '@/server-store/server-store';
 
 type PerformanceData = {
   osType: string;
@@ -11,6 +12,7 @@ type PerformanceData = {
   cpuModel: string;
   cpuSpeed: number;
   cpuLoad: number;
+  macAddress?: string;
 };
 
 export const socketMain = (io: Server, socket: Socket) => {
@@ -27,6 +29,14 @@ export const socketMain = (io: Server, socket: Socket) => {
       console.log('Invalid client joined');
       socket.disconnect(true); // terminate the underlying connection
     }
+  });
+
+  // A machine has connected to the server.
+  // Check to see if new, if so, add it to the list of machines.
+  socket.on('init-performance-data', (data: PerformanceData) => {
+    serverStore.setMacAddress(data.macAddress!);
+
+    console.log('init-performance-data', data);
   });
 
   socket.on('performance-data', (data: PerformanceData) => {

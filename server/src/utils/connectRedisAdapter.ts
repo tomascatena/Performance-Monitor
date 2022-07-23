@@ -1,6 +1,6 @@
 import { createAdapter } from '@socket.io/redis-adapter';
 import { createClient } from 'redis';
-import serverStore from '../server-store';
+import serverStore from '@/server-store/server-store';
 
 export const connectRedisAdapter = () => {
   const pubClient = createClient({ url: 'redis://localhost:6379' });

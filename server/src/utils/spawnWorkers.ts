@@ -1,4 +1,4 @@
-import serverStore from '../server-store';
+import serverStore from '@/server-store/server-store';
 import cluster, { Worker } from 'cluster';
 import os from 'os';
 

@@ -1,6 +1,6 @@
 import { Server as SocketIOServer } from 'socket.io';
 import http from 'http';
-import serverStore from './server-store';
+import serverStore from '@/server-store/server-store';
 import { socketMain } from './socket-handlers';
 import cluster from 'cluster';
 

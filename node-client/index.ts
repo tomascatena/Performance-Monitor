@@ -43,7 +43,7 @@ const cpuAverage = () => {
   };
 };
 
-const getCpuLoad = () => {
+const getCpuLoad = (): Promise<number> => {
   return new Promise((resolve, reject) => {
     const start = cpuAverage();
 
@@ -61,7 +61,20 @@ const getCpuLoad = () => {
   });
 };
 
-const getPerformanceData = () => {
+type PerformanceData = {
+  osType: string;
+  uptime: number;
+  freeMemory: number;
+  totalMemory: number;
+  usedMemory: number;
+  memoryUsage: number;
+  numberOfCores: number;
+  cpuModel: string;
+  cpuSpeed: number;
+  cpuLoad: number;
+};
+
+const getPerformanceData = (): Promise<PerformanceData> => {
   return new Promise(async (resolve, reject) => {
     // System information
     const osType = os.type() === 'Darwin' ? 'Mac' : os.type();
@@ -128,6 +141,10 @@ socket.on('connect', () => {
 
   // Client auth with single key value
   socket.emit('client-auth', 'pelusa');
+
+  getPerformanceData().then((perfData) => {
+    socket.emit('init-performance-data', { ...perfData, macAddress });
+  });
 
   // Send performance data to server every second
   let performanceDataInterval = setInterval(async () => {
