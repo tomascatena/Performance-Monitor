@@ -14,8 +14,6 @@ const App = () => {
 
   const { performanceData } = useAppSelector(state => state.performanceData);
 
-  console.log('performanceData', performanceData);
-
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -24,10 +22,10 @@ const App = () => {
         <h1>Performance Data</h1>
 
         {
-          Object.keys(performanceData)?.map(macAddress => (
+          Object.entries(performanceData)?.map(([macAddress, perfData]) => (
             <Widget
               key={macAddress}
-              performanceData={performanceData[macAddress]}
+              performanceData={perfData}
             />
           ))
         }

@@ -1,6 +1,9 @@
+import { PerformanceData } from '../../typings/typings';
 import React from 'react';
 
-type Props = {};
+type Props = {
+  performanceData: PerformanceData;
+};
 
 const MemoryMonitor: React.FC<Props> = () => {
   return (

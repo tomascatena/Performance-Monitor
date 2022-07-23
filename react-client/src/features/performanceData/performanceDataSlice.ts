@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PerformanceData } from '../../typings/typings';
 
 export interface PerformanceDataState {
-  performanceData: { [key: string]: PerformanceData | null };
+  performanceData: { [key: string]: PerformanceData };
 }
 
 const initialState: PerformanceDataState = {

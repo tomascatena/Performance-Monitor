@@ -1,23 +1,25 @@
 import { PerformanceData } from '../../typings/typings';
+import { Typography } from '@mui/material';
 import CpuMonitor from '../CpuMonitor/CpuMonitor';
 import GeneralInfoMonitor from '../GeneralInfoMonitor/GeneralInfoMonitor';
 import MemoryMonitor from '../MemoryMonitor/MemoryMonitor';
 import React from 'react';
 
 type Props = {
-  performanceData: PerformanceData | null;
+  performanceData: PerformanceData;
 };
 
-const Widget: React.FC<Props> = () => {
+const Widget: React.FC<Props> = ({ performanceData }) => {
+  console.log(performanceData);
   return (
     <>
-      <h2>Widget</h2>
+      <Typography>Widget</Typography>
 
-      <CpuMonitor />
+      <CpuMonitor performanceData={performanceData} />
 
-      <MemoryMonitor />
+      <MemoryMonitor performanceData={performanceData} />
 
-      <GeneralInfoMonitor />
+      <GeneralInfoMonitor performanceData={performanceData} />
     </>
   );
 };
