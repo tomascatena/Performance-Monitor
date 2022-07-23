@@ -1,10 +1,10 @@
 import { PerformanceData } from '@/typings/typings';
 import { Server as SocketIOServer } from 'socket.io';
 import { checkIfMachineInDB } from '@/utils/checkIfMachineInDB';
-import cluster from 'cluster';
+// import cluster from 'cluster';
 import http from 'http';
 import serverStore from '@/server-store/server-store';
-import util from 'util';
+// import util from 'util';
 
 export const registerSocketServer = (server: http.Server) => {
   const io = new SocketIOServer(server, {
@@ -17,19 +17,19 @@ export const registerSocketServer = (server: http.Server) => {
   serverStore.setSocketServerInstance(io);
 
   io.on('connection', (socket) => {
-    console.log('Socket id', socket.id);
-    console.log(`Connected to worker ${cluster?.worker?.id}`);
+    // console.log('Socket id', socket.id);
+    // console.log(`Connected to worker ${cluster?.worker?.id}`);
 
     socket.on('client-auth', (key) => {
-      console.log(`Client auth key: ${key}`);
+      // console.log(`Client auth key: ${key}`);
       if (key === 'client-key') {
-        console.log('Valid client joined');
+        // console.log('Valid client joined');
         socket.join('clients');
       } else if (key === 'ui-client-key') {
-        console.log('Valid UI client has joined');
+        // console.log('Valid UI client has joined');
         socket.join('ui');
       } else {
-        console.log('Invalid client joined');
+        // console.log('Invalid client joined');
         socket.disconnect(true); // terminate the underlying connection
       }
     });
@@ -39,14 +39,14 @@ export const registerSocketServer = (server: http.Server) => {
     socket.on('init-performance-data', async (performanceData: PerformanceData) => {
       serverStore.setMacAddress(performanceData.macAddress!);
 
-      const machine = await checkIfMachineInDB(performanceData);
+      await checkIfMachineInDB(performanceData);
 
-      console.log(`Machine ${machine.macAddress} has joined`);
-      console.log(util.inspect(machine, { showHidden: false, depth: null, colors: true }));
+      // console.log(`Machine ${machine.macAddress} has joined`);
+      // console.log(util.inspect(machine, { showHidden: false, depth: null, colors: true }));
     });
 
     socket.on('performance-data', (performanceData: PerformanceData) => {
-      console.log(`Received performance data from ${serverStore.getMacAddress()}`);
+      // console.log(`Received performance data from ${serverStore.getMacAddress()}`);
 
       io.to('ui').emit('performance-data', {
         ...performanceData,

@@ -13,7 +13,7 @@ export const netServer = net.createServer({ pauseOnConnect: true }, (connection)
   const ip = connection.remoteAddress;
 
   if (ip) {
-    console.log(`${ip} connected`);
+    // console.log(`${ip} connected`);
 
     const worker = serverStore.getWorkers()[workerIndex(ip, numThreads)];
 

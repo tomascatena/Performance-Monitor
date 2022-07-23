@@ -16,7 +16,7 @@ import { io } from 'socket.io-client';
 const socket = io('http://127.0.0.1:8181');
 
 socket.on('connect', () => {
-  console.log('Connected to socket.io server');
+  // console.log('Connected to socket.io server');
 
   // Client auth with single key value
   socket.emit('client-auth', 'client-key');
