@@ -1,8 +1,8 @@
-import { Worker } from 'cluster';
 import { Server } from 'socket.io';
+import { Worker } from 'cluster';
 
 let io: Server;
-let workers: Worker[] = [];
+const workers: Worker[] = [];
 let macAddress: string;
 
 const setSocketServerInstance = (server: Server) => {

@@ -1,6 +1,6 @@
-import serverStore from '@/server-store/server-store';
-import cluster, { Worker } from 'cluster';
+import cluster from 'cluster';
 import os from 'os';
+import serverStore from '@/server-store/server-store';
 
 const numThreads = os.cpus().length;
 
@@ -13,7 +13,7 @@ const spawn = (index: number) => {
 };
 
 export const spawnWorkers = () => {
-  for (var index = 0; index < numThreads; index++) {
+  for (let index = 0; index < numThreads; index++) {
     spawn(index);
   }
 };

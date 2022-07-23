@@ -2,13 +2,14 @@
  * See https://github.com/elad/node-cluster-socket.io
  */
 
+import { app } from './app';
+import { connectDB } from '@/utils/connectDB';
+import { connectRedisAdapter } from '@/utils/connectRedisAdapter';
+import { netServer } from '@/net-server/net-server';
+import { registerSocketServer } from '@/socket-server/socket-server';
+import { spawnWorkers } from '@/utils/spawnWorkers';
 import cluster from 'cluster';
 import net from 'net';
-import { app } from './app';
-import { registerSocketServer } from '@/socket-server/socket-server';
-import { netServer } from '@/net-server/net-server';
-import { spawnWorkers } from '@/utils/spawnWorkers';
-import { connectRedisAdapter } from '@/utils/connectRedisAdapter';
 
 const PORT = 8181;
 
@@ -20,6 +21,8 @@ if (cluster.isPrimary) {
   console.log(`Master listening on port ${PORT}`);
 } else {
   const expressServer = app.listen(0, 'localhost');
+
+  connectDB();
 
   registerSocketServer(expressServer);
 
