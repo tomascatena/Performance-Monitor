@@ -24,7 +24,7 @@ export const getPerformanceData = (): Promise<PerformanceData> => {
     const freeMemory = os.freemem();
     const totalMemory = os.totalmem();
     const usedMemory = totalMemory - freeMemory;
-    const memoryUsage = Math.floor((usedMemory / totalMemory) * 100) / 100;
+    const memoryUsage = Math.floor((usedMemory / totalMemory) * 100);
 
     // CPU
     const numberOfCores = os.cpus().length;

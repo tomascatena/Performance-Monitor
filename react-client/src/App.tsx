@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { connectWithSocketServer } from './utils/socketConnection';
+import { connectWithSocketServer } from './socketConnection/socketConnection';
 import { useAppSelector } from './app/hooks';
 import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
@@ -14,12 +14,23 @@ const App = () => {
 
   const { performanceData } = useAppSelector(state => state.performanceData);
 
+  const connectedMachines = Object.keys(performanceData).length;
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
 
-      <Box >
-        <h1>Performance Data</h1>
+      <Container>
+        <Typography
+          fontWeight='fontWeightNormal'
+          textAlign='center'
+          sx={{
+            margin: '1rem 0',
+            fontSize: '2.5rem',
+          }}
+        >
+          Performance Data - {connectedMachines} Machine{connectedMachines > 1 ? 's' : ''}
+        </Typography>
 
         {
           Object.entries(performanceData)?.map(([macAddress, perfData]) => (
@@ -29,7 +40,7 @@ const App = () => {
             />
           ))
         }
-      </Box>
+      </Container>
     </ThemeProvider>
 
   );
