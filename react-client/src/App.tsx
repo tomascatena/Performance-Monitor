@@ -2,8 +2,6 @@ import React from 'react';
 import { useAppSelector } from './app/hooks';
 import { connectWithSocketServer } from './utils/socketConnection';
 
-connectWithSocketServer();
-
 const App = () => {
   React.useEffect(() => {
     connectWithSocketServer();
