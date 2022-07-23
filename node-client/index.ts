@@ -21,11 +21,9 @@ socket.on('connect', () => {
   // Client auth with single key value
   socket.emit('client-auth', 'client-key');
 
-  getPerformanceData().then((perfData) => {
-    // console.log(perfData);
-    // console.log(getMacAddress());
+  getPerformanceData().then((performanceData) => {
     socket.emit('init-performance-data', {
-      ...perfData,
+      ...performanceData,
       macAddress: getMacAddress(),
     });
   });
@@ -34,7 +32,10 @@ socket.on('connect', () => {
   const performanceDataInterval = setInterval(async () => {
     const performanceData = await getPerformanceData();
 
-    socket.emit('performance-data', performanceData);
+    socket.emit('performance-data', {
+      ...performanceData,
+      macAddress: getMacAddress(),
+    });
   }, 1000);
 
   socket.on('disconnect', () => {

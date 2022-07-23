@@ -9,5 +9,5 @@ export type PerformanceData = {
   cpuModel: string;
   cpuSpeed: number;
   cpuLoad: number;
-  macAddress?: string;
+  macAddress: string;
 };

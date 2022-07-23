@@ -1,11 +1,8 @@
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '@mui/material/styles';
 import { createRoot } from 'react-dom/client';
 import { store } from './app/store';
 import App from './App';
-import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
-import darkTheme from './themes/darkTheme';
 import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root')!;
@@ -13,12 +10,8 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <CssBaseline />
-
     <Provider store={store}>
-      <ThemeProvider theme={darkTheme}>
-        <App />
-      </ThemeProvider>
+      <App />
     </Provider>
   </React.StrictMode>
 );

@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PerformanceData } from '../../typings/typings';
 
 export interface PerformanceDataState {
-  performanceData: PerformanceData | null;
+  performanceData: { [key: string]: PerformanceData | null };
 }
 
 const initialState: PerformanceDataState = {
-  performanceData: null,
+  performanceData: {},
 };
 
 export const performanceData = createSlice({
@@ -14,7 +14,7 @@ export const performanceData = createSlice({
   initialState,
   reducers: {
     setPerformanceData: (state, action: PayloadAction<PerformanceData>) => {
-      state.performanceData = action.payload;
+      state.performanceData[action.payload.macAddress!] = action.payload;
     },
   },
 });

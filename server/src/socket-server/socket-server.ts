@@ -36,19 +36,22 @@ export const registerSocketServer = (server: http.Server) => {
 
     // A machine has connected to the server.
     // Check to see if new, if so, add it to the list of machines.
-    socket.on('init-performance-data', async (data: PerformanceData) => {
-      serverStore.setMacAddress(data.macAddress!);
+    socket.on('init-performance-data', async (performanceData: PerformanceData) => {
+      serverStore.setMacAddress(performanceData.macAddress!);
 
-      const machine = await checkIfMachineInDB(data);
+      const machine = await checkIfMachineInDB(performanceData);
 
       console.log(`Machine ${machine.macAddress} has joined`);
       console.log(util.inspect(machine, { showHidden: false, depth: null, colors: true }));
     });
 
-    socket.on('performance-data', (data: PerformanceData) => {
-      console.log(`Received performance data from ${data.macAddress}`);
+    socket.on('performance-data', (performanceData: PerformanceData) => {
+      console.log(`Received performance data from ${serverStore.getMacAddress()}`);
 
-      io.to('ui').emit('performance-data', data);
+      io.to('ui').emit('performance-data', {
+        ...performanceData,
+        macAddress: serverStore.getMacAddress(),
+      });
     });
   });
 };
